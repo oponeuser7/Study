@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>Market</title>
+</head>
+<body>
+    <div id="upload-area">
+        <hr>
+        <button id="upload-button">상품 등록하기</button>
+        <div id="upload-screen">
+            <label>상품 이미지 : <input type="file" id="product-image"></label>
+            <label>상품 이름 : <input type="text" id="product-name"></label>
+            <label>상품 가격 : <input type="text" size="10" id="product-price">100원 이상이어야 함</label>
+            <label>상품 개수 : <input type="text" size="5" id="product-count">최대 100개 이하까지 등록 가능</label>
+            <br>
+            <button id="save-button">저장</button>
+            <button id="cancel-button">취소</button>
+        </div>
+    </div>
+    <div id="product-area">
+        <hr>
+        <div id="product-list">
+
+        </div>
+        <button id="put-button">장바구니 담기</button>
+    </div>
+    <hr>
+    <div id="basket-area">
+        <input type="checkbox" id="check-all">전체선택
+        <button id="delete-button">선택 삭제</button>
+        <div id="basket">
+            <table id="basket-table">
+                <thead>
+                    <tr>
+                        <th>선택</th>
+                        <th>상품 이미지</th>
+                        <th>상품 이름</th>
+                        <th>상품 개별 가격(원)</th>
+                        <th>상품 개수</th>
+                        <th>상품 구매 가격(원)</th>
+                    </tr>
+                </thead>
+                <tbody id="basket-table-body">
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">총 가격</th>
+                        <th id= "total-cost">0</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>    
+    <script src="./index.js"></script>
+</body>
+</html>

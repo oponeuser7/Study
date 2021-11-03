@@ -1,0 +1,8 @@
+(echo "This is HF")
+(mov echo "Hello World!" "test.txt")
+(list_dir)
+(show "test.txt")
+(echo "delete test.txt")
+(del "test.txt")
+(mov list_dir “list.txt")
+(show "list.txt")

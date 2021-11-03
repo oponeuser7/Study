@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="index.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="image">
+        <img id="img1" src="./images/img1.jpg" draggable="true" ondragstart="drag(event)" />
+        <img id="img2" src="./images/img2.jpg"  draggable="true" ondragstart="drag(event)" />
+        <img id="img3" src="./images/img3.jpg"  draggable="true" ondragstart="drag(event)" />
+      </div>
+      <input type="button" value="Read" id="read" onclick="readSession(event)"/>
+      <input type="button" value="Clear" id="clear" onclick="clearSession(event)"/>
+  
+      <p>A 바구니</p>
+      <div
+        class="cart"
+        id="div2"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      ></div>
+  
+      <p>B 바구니</p>
+      <div
+        class="cart"
+        id="div3"
+        ondrop="drop(event)"
+        ondragover="allowDrop(event)"
+      ></div>
+</body>
+</html>

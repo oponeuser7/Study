@@ -1,0 +1,16 @@
+.major-button {
+    color: blue;
+}
+
+.student-list {
+    width: 150px;
+    height: auto;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid rgb(210,211,205);
+    background-color: rgb(231,237,207);
+}
+
+.names {
+    margin: 2px;
+}
