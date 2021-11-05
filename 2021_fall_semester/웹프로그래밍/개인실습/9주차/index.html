@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>To-do list</h1>
+    <input type="button" value="Read" id="read-button"/>
+    <input type="button" value="Clear" id="clear-button"/><br><br>
+    <input type="text" id="data"><input type="button" value="계획 추가" id="append-button"><br><br>
+    <div id="to-do-box"></div>
+    <table>
+        <tr>
+            <th>오늘</th>
+            <th>내일</th>
+        </tr>
+        <tr>
+            <td id="today"></td>
+            <td id="tomorrow"></td>
+        </tr>
+    </table>
+    <script src="index.js"></script>
+</body>
+</html>

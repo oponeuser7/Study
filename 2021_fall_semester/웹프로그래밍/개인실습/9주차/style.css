@@ -1,0 +1,22 @@
+table {
+    border: 1px solid #aaaaaa;
+    border-collapse: collapse;
+}
+
+th, td {
+    width: 150px;
+    border: 1px solid #aaaaaa;
+    border-collapse: collapse;
+}
+
+td {
+    height: 200px;
+}
+
+.to-do {
+    display: inline-block; 
+    background-color: lightgray; 
+    border: 1px solid black; 
+    width: 100px;
+    margin: 5px;   
+}
