@@ -1,0 +1,17 @@
+.header {
+    color: rgb(28, 138, 138);
+}
+
+.register-label {
+    display: inline-block;
+    width: 100px;
+    font-weight: bold;
+}
+
+#register-book button, input {
+    margin:5px;
+}
+
+#author-input {
+    display: inline-block;
+}

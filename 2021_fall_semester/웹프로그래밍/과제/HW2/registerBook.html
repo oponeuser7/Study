@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="registerBook.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="header">도서 정보 저장하기</h1>
+    <form action="registerBook.php" method="POST" id=register-book>
+        <div class="register-label">도서 이름</div>
+        <input type="text" name="title"><br>
+        <div class="register-label">저자</div>
+        <div id="author-input"><input type="text" name="author"></div>
+        <button type="button" id="add-author">저자 추가</button>
+        <button type="button" id="remove-author">저자 삭제</button><br>
+        <div class="register-label">출판년월</div>
+        <input type="month" name="publish-date"><br>
+        <div class="register-label">출판사</div>
+        <input type="text" name="publisher"><br>
+        <div class="register-label">미리보기 화일</div>
+        <input type="file" name="img-file"><br>
+        <div class="register-label"></div>
+        <input type="submit" value="저장하기" name="save">
+    </form>
+</body>
+</html>
