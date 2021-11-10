@@ -35,12 +35,19 @@ def kruskal(vertices, edges):
     return result
 
 n, m = map(int, input().split())
-vertices = []
+vertices = input().split()
 edges = []
-for i in range(1,n+1):
-    vertices.append(i)
 for i in range(m):
-    a, b, c = map(int, input().split())
-    edges.append([c,a,b])
-print(kruskal(vertices, sorted(edges)))
+    a, b, c = input().split()
+    edges.append([int(c),a,b])
+edges.sort()
+result = kruskal(vertices, edges)
+ans = 100001
+for i in range(len(edges)):
+    temp = edges.copy()
+    del temp[i]
+    x = kruskal(vertices, temp)
+    if result < x < ans:
+        ans = x
+print(ans)
 

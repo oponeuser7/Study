@@ -19,11 +19,9 @@ def prim(edges, n):
 
 n, m = map(int, input().split())
 edges = [[]for _ in range(n+1)]
-check = set(i for i in range(1, n+1))
 for i in range(m):
     a, b, c = map(int, input().split())
     edges[a].append([b,c])
     edges[b].append([a,c])
-    check.remove(a)
-    check.remove(b)
 print(prim(edges, n))
+    

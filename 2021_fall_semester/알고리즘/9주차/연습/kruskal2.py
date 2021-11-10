@@ -31,13 +31,11 @@ def kruskal(vertices, edges):
             result += cost
     return result
 
-vertices = []
+n, m = map(int, input().split())
+vertices = input().split()
 edges = []
-n = int(input())
-m = int(input())
-for v in range(1, n+1):
-    vertices.append(v)
 for i in range(m):
-    a, b, c = map(int, input().split())
-    edges.append((c, a, b))
+    a, b, c = input().split()
+    edges.append((int(c), a, b))
 print(kruskal(vertices, sorted(edges)))
+
