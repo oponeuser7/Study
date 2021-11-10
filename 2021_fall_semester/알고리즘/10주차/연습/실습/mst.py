@@ -1,11 +1,6 @@
 parent = {}
 rank = {}
 
-def make_set(v):
-    global parent, rank
-    parent[v] = v
-    rank[v] = 0
-
 def find(v):
     global parent, rank
     if parent[v]!=v:
@@ -24,14 +19,16 @@ def union(a, b):
             rank[root1] += 1
 
 def kruskal(vertices, edges):
-    for i in vertices:
-        make_set(i)
+    global parent, rank
+    for v in vertices:
+        parent[v] = v
+        rank[v] = 0
     result = 0
     for edge in edges:
-        c, a, b = edge
+        cost, a, b = edge
         if find(a)!=find(b):
-            union(a,b)
-            result += c
+            union(a, b)
+            result += cost
     return result
 
 n, m = map(int, input().split())
@@ -39,15 +36,5 @@ vertices = input().split()
 edges = []
 for i in range(m):
     a, b, c = input().split()
-    edges.append([int(c),a,b])
-edges.sort()
-result = kruskal(vertices, edges)
-ans = 100001
-for i in range(len(edges)):
-    temp = edges.copy()
-    del temp[i]
-    x = kruskal(vertices, temp)
-    if result < x < ans:
-        ans = x
-print(ans)
-
+    edges.append((int(c), a, b))
+print(kruskal(vertices, sorted(edges)))

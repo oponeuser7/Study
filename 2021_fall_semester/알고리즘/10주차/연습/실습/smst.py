@@ -42,7 +42,7 @@ for i in range(m):
     edges.append([int(c),a,b])
 edges.sort()
 result = kruskal(vertices, edges)
-ans = 100001
+ans = float("inf")
 for i in range(len(edges)):
     temp = edges.copy()
     del temp[i]
@@ -50,4 +50,3 @@ for i in range(len(edges)):
     if result < x < ans:
         ans = x
 print(ans)
-
