@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="searchBook.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="search-header">도서 검색하기</h1>
+    <div id="user-area">
+        <button type="button" id="sign-in">로그인</button>
+        <span id="rent-info">대출정보</span>
+    </div>
+    <div id="sign-in-screen">
+        <div class="sign-in-row">
+            <div class="sign-in-label">id</div>
+            <input type="text" id="id"><br>
+        </div>
+        <div class="sign-in-row">
+            <div class="sign-in-label">password</div>
+            <input type="text" id="password"><br>
+        </div>
+        <div class="sign-in-label"></div>
+        <button type="button" id="submit-button">Submit</button>
+        <button type="button" id="sign-up-button">SignIn</button>
+    </div>
+    <div id="search-bar">
+        <input type="text" size="100">
+        <button type="button" id="search">검색</button>
+    </div>
+    <div id="result-area">
+        
+    </div>
+</body>
+</html>

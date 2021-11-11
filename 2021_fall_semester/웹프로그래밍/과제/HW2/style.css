@@ -1,5 +1,7 @@
-.header {
-    color: rgb(28, 138, 138);
+.center {
+    position: absolute;
+    left: 40%;
+    top: 200px;
 }
 
 .register-label {
@@ -8,10 +10,65 @@
     font-weight: bold;
 }
 
+.sign-in-label {
+    display: inline-block;
+    width: 80px;
+}
+
+.sign-in-row {
+    position: relative;
+    left: 30px;
+}
+
+#register-header {
+    position: absolute;
+    left: 40%;
+    top: 100px;
+    color: rgb(28, 138, 138);
+}
+
+#search-header {
+    position: absolute;
+    left: 40%;
+    top: 130px;
+    color: rgb(28, 138, 138);
+}
+
 #register-book button, input {
     margin:5px;
 }
 
 #author-input {
     display: inline-block;
+}
+
+#user-area {
+    position: absolute;
+    left: 90%;
+}
+
+#search-bar {
+    position: absolute;
+    left: 18%;
+    top: 230px;
+}
+
+#sign-in-screen {
+    position: absolute;
+    left: 75%;
+    top: 70px;
+    background-color: rgb(203,225,231);
+    border: 1px solid rgb(238,238,238);
+    width: 300px;
+    height: 100px;
+    display: none;
+}
+
+#result-area {
+    position: absolute;
+    left: 10%;
+    top: 300px;
+    background-color: aliceblue;
+    width: 1000px;
+    min-height: 300px;
 }

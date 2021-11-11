@@ -11,11 +11,12 @@
 </head>
 <body>
     <h1 class="header">도서 정보 저장하기</h1>
-    <form action="registerBook.php" method="POST" id=register-book>
+    <div id="search-center">
+    <form action="registerBook.php" method="POST" id=register-book enctype="multipart/form-data">
         <div class="register-label">도서 이름</div>
         <input type="text" name="title"><br>
         <div class="register-label">저자</div>
-        <div id="author-input"><input type="text" name="author"></div>
+        <div id="author-input"><input type="text" name="authors[]"></div>
         <button type="button" id="add-author">저자 추가</button>
         <button type="button" id="remove-author">저자 삭제</button><br>
         <div class="register-label">출판년월</div>
@@ -27,5 +28,6 @@
         <div class="register-label"></div>
         <input type="submit" value="저장하기" name="save">
     </form>
+    </div>
 </body>
 </html>
