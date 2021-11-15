@@ -90,3 +90,41 @@
     border: 1px solid rgb(221,221,221);
     text-align: center;
 }
+
+#user-info div {
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#rent-list table {
+    width: 1200px;
+}
+
+#rent-list th {
+    background-color: rgb(153,102,255);
+    color: white;
+}
+
+#rent-list th, td {
+    height: 40px;
+}
+
+#rent-list table, th, td {
+    border-collapse: collapse;
+    border: 1px solid rgb(221,221,221);
+    text-align: center;
+}
+
+#rent-list {
+    position: absolute;
+    left: 3%;
+    top: 80px;
+    width: 1200px;
+    min-height: 300px;
+}
+
+#user-info {
+    position: absolute;
+    left: 88%;
+}

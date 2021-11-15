@@ -14,6 +14,7 @@ $(document).ready(function() {
                     });
                     $("#sign-out").remove();
                     $("#user-area").prepend(button);
+                    alert("로그아웃이 되었습니다");
                 });
             });
             $("#sign-in").remove();
@@ -44,6 +45,7 @@ $(document).ready(function() {
                             });
                             $("#sign-out").remove();
                             $("#user-area").prepend(button);
+                            alert("로그아웃이 되었습니다");
                         });
                     });
                     $("#sign-in").remove();
@@ -70,7 +72,12 @@ $(document).ready(function() {
     });
 
     $("#rent-info").click(function(event) {
-
+        $.post("identification.php", {}, function(data) {
+        if(data=="success") {
+            window.open("returnBook.html");
+        }
+        else alert("로그인 후, 대출정보 보기가 가능합니다");
+    });
     });
     $("#search").click(function(event) {
         $("#result-area").empty();
@@ -109,7 +116,6 @@ $(document).ready(function() {
                                 const rentalDates = []
                                 rows.each(function() {
                                     const checked = $(this).find("input").is(":checked");
-                                    console.log(checked);
                                     if(checked) {
                                         const rental = $(this).find(".rental");
                                         const temp = new Date();
@@ -118,8 +124,6 @@ $(document).ready(function() {
                                         rental.text("rented");
                                     }
                                 });
-                                console.log(bookNames);
-                                console.log(rentalDates);
                                 $.post("rentBook.php", {bookNames:bookNames, rentalDates:rentalDates}, function() {
                                     alert("대출되었습니다");
                                 });

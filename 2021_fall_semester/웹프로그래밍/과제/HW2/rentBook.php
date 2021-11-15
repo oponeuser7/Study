@@ -34,7 +34,6 @@
             }
         }
     }
-    print_r($rentList);
     $file = fopen("data/rentList.json", "w");
     fwrite($file, implode("\n", $rentList));
     fclose($file);
