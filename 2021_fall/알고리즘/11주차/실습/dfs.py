@@ -1,22 +1,22 @@
 import sys
 
-def pre_order(node):
-    if not node: return
-    sys.stdout.write(node)
-    pre_order(left[node])
-    pre_order(right[node])
+def pre_order(node): #pre-order 함수
+    if not node: return #리프 노드에서 리턴
+    sys.stdout.write(node) #pre-order 출력
+    pre_order(left[node]) #좌측 자식 호출
+    pre_order(right[node]) #우측 자식 호출
 
-def in_order(node):
-    if not node: return
-    in_order(left[node])
-    sys.stdout.write(node)
-    in_order(right[node])
+def in_order(node): #in-order 함수
+    if not node: return #리프 노드에서 리턴
+    in_order(left[node]) #좌측 자식 호출
+    sys.stdout.write(node) #in-order 출력
+    in_order(right[node]) #우측 자식 호출
 
-def post_order(node):
-    if not node: return
-    post_order(left[node])
-    post_order(right[node])
-    sys.stdout.write(node)
+def post_order(node): #post-order 함수
+    if not node: return #리프 노드에서 리턴
+    post_order(left[node]) #좌측 자식 호출
+    post_order(right[node]) #우측 자식 호출
+    sys.stdout.write(node) #post-order 출력
 
 n = int(input())
 left = {}
@@ -30,3 +30,4 @@ print()
 in_order('A')
 print()
 post_order('A')
+
