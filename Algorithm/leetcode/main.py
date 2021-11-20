@@ -1,9 +1,10 @@
 import _461
+import _540
 
 def main():
-    solution = _461.Solution()
+    solution = _540.Solution()
     print("Here goes the answer: ")
-    print(solution.hammingDistance(1,32))
+    print(solution.singleNonDuplicate([1,1,2,2,3,3,4,8,8]))
     
 if __name__=="__main__":
     main()
