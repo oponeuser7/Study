@@ -1,3 +1,4 @@
+from typing import List
 from math import log2
 
 class Solution:
