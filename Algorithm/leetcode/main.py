@@ -5,10 +5,11 @@ import _721
 import _85
 import _198
 import _152
+import _1306
 
 def main():
-    solution = _152.Solution()
+    solution = _1306.Solution()
     sys.stdout.write("\033[95mHere goes the answer: \033[0m")
-    print(solution.maxProduct([2,3,-2,4]))
+    print(solution.canReach([3,0,2,1,2], 2))
 
 if __name__=="__main__": main()
