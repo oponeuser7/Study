@@ -6,10 +6,11 @@ import _85
 import _198
 import _152
 import _1306
+import _790
 
 def main():
-    solution = _1306.Solution()
+    solution = _790.Solution()
     sys.stdout.write("\033[95mHere goes the answer: \033[0m")
-    print(solution.canReach([3,0,2,1,2], 2))
+    print(solution.numTilings(3))
 
 if __name__=="__main__": main()
