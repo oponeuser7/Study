@@ -1,2 +1,2 @@
 # Study
-Everything I study.
+Everything I study
