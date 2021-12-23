@@ -7,7 +7,7 @@ import java.util.Map;
 import generated.MiniCParser;
 import generated.MiniCParser.Fun_declContext;
 import generated.MiniCParser.Local_declContext;
-import generated.MiniCParser.ParamsContext;
+import generated.MiniCParser.ParamContext;
 import generated.MiniCParser.Type_specContext;
 import generated.MiniCParser.Var_declContext;
 import main.SymbolTable.Type;
@@ -62,24 +62,30 @@ public class SymbolTable {
 	}
 	
 	void putLocalVar(String varname, Type type){
-		//<Fill here>
+		VarInfo varInfo = new VarInfo(type, _localVarID++);
+		_lsymtable.put(varname, varInfo);
 	}
 	
 	void putGlobalVar(String varname, Type type){
-		//<Fill here>
+	    VarInfo varInfo = new VarInfo(type, _globalVarID++);
+	    _gsymtable.put(varname, varInfo);
 	}
 	
 	void putLocalVarWithInitVal(String varname, Type type, int initVar){
-		//<Fill here>
+		VarInfo varInfo = new VarInfo(type, _localVarID++, initVar);
+		_lsymtable.put(varname, varInfo);
 	}
 	void putGlobalVarWithInitVal(String varname, Type type, int initVar){
-		//<Fill here>
-	
+		VarInfo varInfo = new VarInfo(type, _globalVarID++, initVar);
+		_gsymtable.put(varname, varInfo);
 	}
 	
 	void putParams(MiniCParser.ParamsContext params) {
 		for(int i = 0; i < params.param().size(); i++) {
-		//<Fill here>
+			String varname = params.param(i).IDENT().getText();
+			Type type = params.param(i).type_spec().getText().equals("int") ? Type.INT : Type.VOID;
+			VarInfo varInfo = new VarInfo(type, _localVarID++);
+			_lsymtable.put(varname, varInfo);
 		}
 	}
 	
@@ -93,22 +99,25 @@ public class SymbolTable {
 		_fsymtable.put("main", maininfo);
 	}
 	
-	public String getFunSpecStr(String fname) {		
-		// <Fill here>
+	public String getFunSpecStr(String fname) {
+		return _fsymtable.get(fname).sigStr;
 	}
 
 	public String getFunSpecStr(Fun_declContext ctx) {
-		// <Fill here>	
+	    return getFunSpecStr(ctx.IDENT().getText());
 	}
 	
 	public String putFunSpecStr(Fun_declContext ctx) {
 		String fname = getFunName(ctx);
-		String argtype = "";	
+		String argtype = "";
 		String rtype = "";
 		String res = "";
-		
-		// <Fill here>	
-		
+
+		for(int i=0; i<ctx.params().param().size(); i++) {
+			argtype += "I";
+		}
+		rtype += ctx.type_spec().getText().equals("int") ? "I" : "V";
+
 		res =  fname + "(" + argtype + ")" + rtype;
 		
 		FInfo finfo = new FInfo();
@@ -119,7 +128,16 @@ public class SymbolTable {
 	}
 	
 	String getVarId(String name){
-		// <Fill here>	
+	VarInfo lvar = (VarInfo) _lsymtable.get(name);
+		if (lvar != null) {
+			return Integer.toString(lvar.id);
+		}
+
+		VarInfo gvar = (VarInfo) _gsymtable.get(name);
+		if (gvar != null) {
+			return Integer.toString(gvar.id);
+		}
+		return null;
 	}
 	
 	Type getVarType(String name){
@@ -146,7 +164,9 @@ public class SymbolTable {
 
 	// global
 	public String getVarId(Var_declContext ctx) {
-		// <Fill here>	
+		String sname = "";
+		sname += getVarId(ctx.IDENT().getText());
+		return sname;
 	}
 
 	// local

@@ -1,7 +1,9 @@
 package main;
 
 import java.util.Hashtable;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -87,14 +89,23 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 		
 		for(int i = 0; i < ctx.getChildCount(); i++) {
 			if(isFunDecl(ctx, i))
-				fun_decl += newTexts.get(ctx.decl(i));
+				fun_decl += newTexts.get(ctx.decl(i))+"\n";
 			else
-				var_decl += newTexts.get(ctx.decl(i));
+				var_decl += newTexts.get(ctx.decl(i))+"\n";
 		}
 		
 		newTexts.put(ctx, classProlog + var_decl + fun_decl);
 		
 		System.out.println(newTexts.get(ctx));
+
+		File file = new File("Test.j"); // 본인 학번으로 변경해주세요.
+		try {
+			FileWriter fw = new FileWriter(file);
+			fw.write(newTexts.get(ctx));
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}	
 	
 	
@@ -122,7 +133,12 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 				stmt += newTexts.get(ctx.expr_stmt());
 			else if(ctx.compound_stmt() != null)	// compound_stmt
 				stmt += newTexts.get(ctx.compound_stmt());
-			// <(0) Fill here>				
+			else if(ctx.if_stmt() != null)
+				stmt += newTexts.get(ctx.if_stmt());
+			else if(ctx.while_stmt() != null)
+				stmt += newTexts.get(ctx.while_stmt());
+			else if(ctx.return_stmt() != null)
+				stmt += newTexts.get(ctx.return_stmt());
 	}
 		newTexts.put(ctx, stmt);
 	}
@@ -142,20 +158,32 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 	// while_stmt	: WHILE '(' expr ')' stmt
 	@Override
 	public void exitWhile_stmt(MiniCParser.While_stmtContext ctx) {
-			// <(1) Fill here!>
+	    String stmt = newTexts.get(ctx.stmt());
+	    String expr = newTexts.get(ctx.expr());
+	    String result = "Loop:\n"+
+					expr+
+					"ifeq Lend"+"\n"+
+					stmt+
+					"goto Loop"+"\n"+
+					"Lend:\n";
+	    newTexts.put(ctx, result);
 	}
 	
 	
 	@Override
 	public void exitFun_decl(MiniCParser.Fun_declContext ctx) {
-			// <(2) Fill here!>
+	    String fname = ctx.IDENT().getText();
+	    String fheader = funcHeader(ctx, fname);
+	    String stmt = newTexts.get(ctx.compound_stmt());
+	    if(fname.equals("main")) stmt += "return\n";
+	    newTexts.put(ctx, fheader+stmt+".end method"+"\n");
 	}
 	
 
 	private String funcHeader(MiniCParser.Fun_declContext ctx, String fname) {
 		return ".method public static " + symbolTable.getFunSpecStr(fname) + "\n"	
-				+ "\t" + ".limit stack " 	+ getStackSize(ctx) + "\n"
-				+ "\t" + ".limit locals " 	+ getLocalVarSize(ctx) + "\n";
+				+".limit stack " 	+ getStackSize(ctx) + "\n"
+				+".limit locals " 	+ getLocalVarSize(ctx) + "\n";
 				 	
 	}
 	
@@ -182,7 +210,7 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 			symbolTable.putLocalVarWithInitVal(getLocalVarName(ctx), Type.INT, initVal(ctx));
 			String vId = symbolTable.getVarId(ctx);
 			varDecl += "ldc " + ctx.LITERAL().getText() + "\n"
-					+ "istore_" + vId + "\n"; 			
+					+ "istore " + vId + "\n";
 		}
 		
 		newTexts.put(ctx, varDecl);
@@ -192,7 +220,14 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 	// compound_stmt	: '{' local_decl* stmt* '}'
 	@Override
 	public void exitCompound_stmt(MiniCParser.Compound_stmtContext ctx) {
-		// <(3) Fill here>
+	    String result = "";
+		for(Local_declContext decl : ctx.local_decl()) {
+			result += newTexts.get(decl);
+		}
+		for(StmtContext stmt : ctx.stmt()) {
+			result += newTexts.get(stmt);
+		}
+		newTexts.put(ctx, result);
 	}
 
 	// if_stmt	: IF '(' expr ')' stmt | IF '(' expr ')' stmt ELSE stmt;
@@ -207,19 +242,19 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 		
 		
 		if(noElse(ctx)) {		
-			stmt += condExpr + "\n"
+			stmt += condExpr
 				+ "ifeq " + lend + "\n"
-				+ thenStmt + "\n"
+				+ thenStmt
 				+ lend + ":"  + "\n";	
 		}
 		else {
 			String elseStmt = newTexts.get(ctx.stmt(1));
-			stmt += condExpr + "\n"
+			stmt += condExpr
 					+ "ifeq " + lelse + "\n"
-					+ thenStmt + "\n"
+					+ thenStmt
 					+ "goto " + lend + "\n"
-					+ lelse + ": " + elseStmt + "\n"
-					+ lend + ":"  + "\n";	
+					+ lelse + ": " + elseStmt
+					+ lend + ":"  + "\n";
 		}
 		
 		newTexts.put(ctx, stmt);
@@ -229,7 +264,14 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 	// return_stmt	: RETURN ';' | RETURN expr ';'
 	@Override
 	public void exitReturn_stmt(MiniCParser.Return_stmtContext ctx) {
-			// <(4) Fill here>
+		String result = "";
+	    if(ctx.getChildCount()==3) {
+	    	result += newTexts.get(ctx.expr())+"ireturn\n";
+		}
+	    else {
+	    	result += "ireturn\n";
+		}
+	    newTexts.put(ctx, result);
 	}
 
 	
@@ -246,12 +288,12 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 			if(ctx.IDENT() != null) {
 				String idName = ctx.IDENT().getText();
 				if(symbolTable.getVarType(idName) == Type.INT) {
-					expr += "iload_" + symbolTable.getVarId(idName) + " \n";
+					expr += "iload " + symbolTable.getVarId(idName) + " \n";
 				}
 				//else	// Type int array => Later! skip now..
 				//	expr += "           lda " + symbolTable.get(ctx.IDENT().getText()).value + " \n";
 			} else if (ctx.LITERAL() != null) {
-					String literalStr = ctx.LITERAL().getText();
+				String literalStr = ctx.LITERAL().getText();
 				expr += "ldc " + literalStr + " \n";
 			}
 		} else if(ctx.getChildCount() == 2) { // UnaryOperation
@@ -262,7 +304,7 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 				
 			} else if(ctx.getChild(1).getText().equals("=")) { 	// IDENT '=' expr
 				expr = newTexts.get(ctx.expr(0))
-						+ "istore_" + symbolTable.getVarId(ctx.IDENT().getText()) + " \n";
+						+ "istore " + symbolTable.getVarId(ctx.IDENT().getText()) + " \n";
 				
 			} else { 											// binary operation
 				expr = handleBinExpr(ctx, expr);
@@ -292,7 +334,7 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 		expr += newTexts.get(ctx.expr(0));
 		switch(ctx.getChild(0).getText()) {
 		case "-":
-			expr += "           ineg \n"; break;
+			expr += "ineg \n"; break;
 		case "--":
 			expr += "ldc 1" + "\n"
 					+ "isub" + "\n";
@@ -334,42 +376,67 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 				
 			case "==":
 				expr += "isub " + "\n"
-						+ "ifeq l2"+ "\n"
+						+ "ifeq "+ l2 + "\n"
 						+ "ldc 0" + "\n"
 						+ "goto " + lend + "\n"
-						+ l2 + ": " + "ldc 1" + "\n"
+						+ l2 + ": \n" + "ldc 1" + "\n"
 						+ lend + ": " + "\n";
 				break;
 			case "!=":
 				expr += "isub " + "\n"
-						+ "ifne l2"+ "\n"
+						+ "ifne "+ l2 + "\n"
 						+ "ldc 0" + "\n"
 						+ "goto " + lend + "\n"
-						+ l2 + ": " + "ldc 1" + "\n"
+						+ l2 + ": \n" + "ldc 1" + "\n"
 						+ lend + ": " + "\n";
 				break;
 			case "<=":
-				// <(5) Fill here>
+				expr += "isub " + "\n"
+						+ "ifle " + l2 + "\n"
+						+ "ldc 0" + "\n"
+						+ "goto " + lend + "\n"
+						+ l2 + ": \n" + "ldc 1" + "\n"
+						+ lend + ": " + "\n";
 				break;
 			case "<":
-				// <(6) Fill here>
+				expr += "isub " + "\n"
+						+ "iflt " + l2 + "\n"
+						+ "ldc 0" + "\n"
+						+ "goto " + lend + "\n"
+						+ l2 + ": \n" + "ldc 1" + "\n"
+						+ lend + ": " + "\n";
 				break;
 
 			case ">=":
-				// <(7) Fill here>
-
+				expr += "isub " + "\n"
+						+ "ifge " + l2 + "\n"
+						+ "ldc 0" + "\n"
+						+ "goto " + lend + "\n"
+						+ l2 + ": \n" + "ldc 1" + "\n"
+						+ lend + ": " + "\n";
 				break;
 
 			case ">":
-				// <(8) Fill here>
+				expr += "isub " + "\n"
+						+ "ifgt " + l2 + "\n"
+						+ "ldc 0" + "\n"
+						+ "goto " + lend + "\n"
+						+ l2 + ": \n" + "ldc 1" + "\n"
+						+ lend + ": " + "\n";
 				break;
 
 			case "and":
-				expr +=  "ifne "+ lend + "\n"
+				expr += "iand\n"+
+						"ifne "+ lend + "\n"
 						+ "pop" + "\n" + "ldc 0" + "\n"
-						+ lend + ": " + "\n"; break;
+						+ lend + ": " + "\n";
+				break;
+
 			case "or":
-				// <(9) Fill here>
+				expr += "ior\n"+
+						"ifne "+ lend + "\n"
+						+ "pop" + "\n" + "ldc 0" + "\n"
+						+ lend + ": " + "\n";
 				break;
 
 		}
@@ -395,11 +462,11 @@ public class BytecodeGenListener extends MiniCBaseListener implements ParseTreeL
 	@Override
 	public void exitArgs(MiniCParser.ArgsContext ctx) {
 
-		String argsStr = "\n";
+		String argsStr = "";
 		
 		for (int i=0; i < ctx.expr().size() ; i++) {
-			argsStr += newTexts.get(ctx.expr(i)) ; 
-		}		
+			argsStr += newTexts.get(ctx.expr(i)) ;
+		}
 		newTexts.put(ctx, argsStr);
 	}
 

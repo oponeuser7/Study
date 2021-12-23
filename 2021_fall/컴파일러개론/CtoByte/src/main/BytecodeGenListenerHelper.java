@@ -56,7 +56,7 @@ public class BytecodeGenListenerHelper {
 	}
 	
 	static boolean isVoidF(Fun_declContext ctx) {
-			// <Fill in>
+	    return ctx.type_spec().getText().equals("void");
 	}
 	
 	static boolean isIntReturn(MiniCParser.Return_stmtContext ctx) {
@@ -76,12 +76,12 @@ public class BytecodeGenListenerHelper {
 		return "32";
 	}
 	static String getTypeText(Type_specContext typespec) {
-			// <Fill in>
+		return typespec.getChild(0).getText();
 	}
 
 	// params
 	static String getParamName(ParamContext param) {
-		// <Fill in>
+	    return null;
 	}
 	
 	static String getParamTypesText(ParamsContext params) {
@@ -95,27 +95,31 @@ public class BytecodeGenListenerHelper {
 	}
 	
 	static String getLocalVarName(Local_declContext local_decl) {
-		// <Fill in>
+	    return local_decl.IDENT().getText();
 	}
 	
 	static String getFunName(Fun_declContext ctx) {
-		// <Fill in>
+	    return ctx.IDENT().getText();
 	}
 	
 	static String getFunName(ExprContext ctx) {
-		// <Fill in>
+	    return ctx.IDENT().getText();
 	}
 	
 	static boolean noElse(If_stmtContext ctx) {
-		return ctx.getChildCount() < 5;
+		return ctx.getChildCount() < 6;
 	}
 	
 	static String getFunProlog() {
-		// return ".class public Test .....
-		// ...
-		// invokenonvirtual java/lang/Object/<init>()
-		// return
-		// .end method"
+		return ".class public Test\n"+
+                "\n"+
+				".super java/lang/Object\n"+
+				".method public <init>()V\n"+
+				"aload_0\n"+
+				"invokenonvirtual java/lang/Object/<init>()V\n"+
+				"return\n"+
+				".end method\n"+
+				"\n";
 	}
 	
 	static String getCurrentClassName() {
