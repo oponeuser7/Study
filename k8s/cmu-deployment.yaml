@@ -1,0 +1,29 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: cmu-docker-deployment 
+  labels:
+    app: cmu-docker 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels: 
+      app: cmu-docker
+  template: 
+    metadata:
+      labels:
+        app: cmu-docker
+    spec:
+      containers:
+      - name: cmu-docker
+        image: develo0100/cmu:latest 
+        ports:
+        - containerPort: 5000 
+        magePullPolicy: Always 
+        resources:
+          requests: 
+            memory: "256Mi"
+            cpu: "200m"
+          limits: 
+            memory: "1Gi" 
+            cpu: "500m"
