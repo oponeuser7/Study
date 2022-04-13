@@ -2,7 +2,7 @@
 #최신컴퓨터특강
 
 # 자기 소개
-`boolean do = wantTo||haveTo;`
+`boolean do = wantTo||haveTo;`<br>
 제가 한창 무기력함에 시달릴 때 JAVA로 작성한 인생 공식입니다. 바보같지만 또 이런 것이 제 가치관이기도 합니다. 인생에는 정답을 알 수 없는 것들이 너무 많습니다. 그래서 저는 삶을 방법론적으로 바라보는 법을 배웠습니다. 그리고 이런 기질이 개발자의 자질이 될 수 있다고 생각합니다. 프로그래밍에는 부울 대수가 있기 때문입니다.
 - - - -
 
@@ -15,6 +15,7 @@
 - - - -
 # 자신의 경쟁력
 저는 Spring 프레임워크를 시작부터 Kotlin으로 배웠습니다. 따라서 Java 코드를 그저 Kotlin으로 옮긴 수준 이상의 개발을 넘어서, Kotlin dsl을 활용한 Kotlin스러운 코드를 작성하는 것이 가능합니다.
+- - - -
 
 # 포트폴리오
 [oponeuser7 (Yongwoo Nam) · GitHub](https://github.com/oponeuser7)
