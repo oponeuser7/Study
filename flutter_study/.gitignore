@@ -4,6 +4,7 @@ windows/
 macos/
 linux/
 web/
+*.swp
 # Miscellaneous
 *.class
 *.log
