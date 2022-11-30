@@ -4,3 +4,6 @@ Algorithm/leetcode/__pycache__/
 *.swp
 a.out
 .ipynb_checkpoints/
+.idea/
+CMakeLists.txt
+cmake-build-debug/
